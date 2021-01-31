@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "24253290877",
+    "project_id": "events-app-bd413",
+    "storage_bucket": "events-app-bd413.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:24253290877:android:a266dbd66573c1f95fd414",
+        "android_client_info": {
+          "package_name": "aya.events_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "24253290877-4mt0klpr71e7h8s2lild1r9sql967701.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfibeKKO0PVcdYI6q1gkru70RgR3voT7k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "24253290877-4mt0klpr71e7h8s2lild1r9sql967701.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
