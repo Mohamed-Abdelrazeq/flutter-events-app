@@ -6,6 +6,7 @@ import 'Controllers/UserProvider.dart';
 import 'Controllers/PageProvider.dart';
 import 'Views/Screens/AccountPage.dart';
 import 'Views/Screens/EnterScreen.dart';
+import 'Views/Screens/EventScreen.dart';
 import 'Views/Screens/HomePage.dart';
 import 'Views/Screens/Loading.dart';
 import 'Views/Screens/Login.dart';
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
         '/MyHomePage': (context) => MyHomePage(),
         '/AccountPage': (context) => AccountPage(),
         '/HomePage': (context) => HomePage(),
+        '/EventScreen': (context) => EventScreen(),
       },
       home: FutureBuilder(
         // Initialize FlutterFire:
