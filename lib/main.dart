@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'Controllers/DateProvider.dart';
+import 'Controllers/AddEventProvider.dart';
 import 'Controllers/UserProvider.dart';
 import 'Controllers/PageProvider.dart';
 import 'Views/Screens/AccountPage.dart';
@@ -23,7 +23,7 @@ void main() {
       providers: [
         ChangeNotifierProvider<PageProvider>(create: (_) => PageProvider()),
         ChangeNotifierProvider<UserProvider>(create: (_) => UserProvider()),
-        ChangeNotifierProvider<DateProvider>(create: (_) => DateProvider()),
+        ChangeNotifierProvider<AddEventProvider>(create: (_) => AddEventProvider()),
 
       ],
       child: MyApp(),

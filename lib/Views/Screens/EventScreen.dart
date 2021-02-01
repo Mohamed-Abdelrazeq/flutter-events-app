@@ -3,6 +3,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class EventScreen extends StatelessWidget {
+
+  const EventScreen({
+    @required this.date,
+    @required this.place,
+    @required this.organizer,
+    @required this.about,
+    @required this.name,
+    @required this.imageUrl,
+  });
+
+  final String date;
+  final String place;
+  final String organizer;
+  final String about;
+  final String name;
+  final String imageUrl;
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -45,7 +62,7 @@ class EventScreen extends StatelessWidget {
                             height: height * .02,
                           ),
                           Text(
-                            'Rock Party',
+                            name,
                             style: TextStyle(
                                 fontSize: height * .06,
                                 color: Colors.black,
@@ -72,7 +89,7 @@ class EventScreen extends StatelessWidget {
                             height: height * .01,
                           ),
                           Text(
-                            'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec,',
+                            about,
                             style: TextStyle(
                                 color: Colors.black54,
                                 fontSize: height * .025,
@@ -111,7 +128,7 @@ class EventScreen extends StatelessWidget {
                                 width: 10,
                               ),
                               Text(
-                                '1 Feb,2021',
+                                date,
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontSize: height * .03,
@@ -143,7 +160,7 @@ class EventScreen extends StatelessWidget {
                                 width: 15,
                               ),
                               Text(
-                                'Alexandria Great hall',
+                                place,
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontSize: height * .03,
@@ -175,7 +192,7 @@ class EventScreen extends StatelessWidget {
                                 width: 15,
                               ),
                               Text(
-                                'John Smith',
+                                organizer,
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontSize: height * .03,

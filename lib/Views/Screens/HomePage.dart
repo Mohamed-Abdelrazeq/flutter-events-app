@@ -1,3 +1,4 @@
+import 'package:events_app/Views/Screens/EventScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoder/geocoder.dart';
@@ -123,6 +124,30 @@ class HomePage extends StatelessWidget {
                           date: '1 Feb,2021',
                           place: 'Alexandria Great hall',
                           imageUrl: 'images/partyposter.jpg',
+                          organizer: 'John Smith',
+                          about:'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec,',
+                        ),
+                        EventCard(
+                          width: width,
+                          height: height,
+                          name: 'Metal Party',
+                          date: '1 Feb,2021',
+                          place: 'Alexandria Great hall',
+                          imageUrl: 'images/partyposter2.jpg',
+                          organizer: 'John Smith',
+                          about:'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec,',
+
+                        ),
+                        EventCard(
+                          width: width,
+                          height: height,
+                          name: 'Pop Party',
+                          date: '1 Feb,2021',
+                          place: 'Alexandria Great hall',
+                          imageUrl: 'images/partposter3.jpg',
+                          organizer: 'John Smith',
+                          about:'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec,',
+
                         ),
                         EventCard(
                           width: width,
@@ -130,23 +155,10 @@ class HomePage extends StatelessWidget {
                           name: 'Rock Party',
                           date: '1 Feb,2021',
                           place: 'Alexandria Great hall',
-                          imageUrl: 'images/partyposter.jpg',
-                        ),
-                        EventCard(
-                          width: width,
-                          height: height,
-                          name: 'Rock Party',
-                          date: '1 Feb,2021',
-                          place: 'Alexandria Great hall',
-                          imageUrl: 'images/partyposter.jpg',
-                        ),
-                        EventCard(
-                          width: width,
-                          height: height,
-                          name: 'Rock Party',
-                          date: '1 Feb,2021',
-                          place: 'Alexandria Great hall',
-                          imageUrl: 'images/partyposter.jpg',
+                          imageUrl: 'images/partposter4.jpg',
+                            organizer: 'John Smith',
+                            about:'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec,',
+
                         ),
                         SizedBox(height: 20,),
                       ],
@@ -171,6 +183,8 @@ class EventCard extends StatelessWidget {
     @required this.place,
     @required this.name,
     @required this.imageUrl,
+    @required this.organizer,
+    @required this.about
   });
 
   final double width;
@@ -179,12 +193,17 @@ class EventCard extends StatelessWidget {
   final String place;
   final String name;
   final String imageUrl;
+  final String about;
+  final String organizer;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        Navigator.pushNamed(context, '/EventScreen');
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => EventScreen(date: date, place: place, organizer: organizer, about: about, name: name, imageUrl: imageUrl)),
+        );
       },
       child: Container(
         width: width,
@@ -207,7 +226,7 @@ class EventCard extends StatelessWidget {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   image: DecorationImage(
-                      image: AssetImage('images/partyposter.jpg'))),
+                      image: AssetImage(imageUrl))),
             ),
             SizedBox(
               width: 15,
@@ -217,14 +236,14 @@ class EventCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '1 Feb, 2021',
+                  date,
                   style: TextStyle(
                       color: Colors.blue,
                       fontWeight: FontWeight.w300,
                       fontSize: height * .022),
                 ),
                 Text(
-                  'Rock Party',
+                  name,
                   style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
@@ -237,7 +256,7 @@ class EventCard extends StatelessWidget {
                       color: Colors.blue,
                     ),
                     Text(
-                      'Alexandria Great hall',
+                      place,
                       style: TextStyle(
                           color: Colors.blueGrey,
                           fontWeight: FontWeight.w300,
