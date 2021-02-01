@@ -8,6 +8,7 @@ class MyTextField extends StatelessWidget {
     @required this.myWidth,
     @required this.myHeight,
     @required this.hint,
+    @required this.myIcon,
     @required this.myColor,
     @required this.myController,
   });
@@ -17,6 +18,7 @@ class MyTextField extends StatelessWidget {
   final double myWidth;
   final double myHeight;
   final String hint;
+  final IconData myIcon;
   final Color myColor;
   final TextEditingController myController;
 
@@ -32,6 +34,9 @@ class MyTextField extends StatelessWidget {
           borderRadius: BorderRadius.circular(height * .02)),
       child: Center(
         child: TextField(
+            inputFormatters: [
+              FilteringTextInputFormatter.deny(RegExp('[ ]')),
+            ],
           controller: myController,
             keyboardType: TextInputType.multiline,
             maxLines: null,
@@ -44,6 +49,10 @@ class MyTextField extends StatelessWidget {
               disabledBorder: InputBorder.none,
               contentPadding: EdgeInsets.only(
                   left: 15, bottom: 11, top: 11, right: 15),
+              icon: Icon(
+                myIcon,
+                color: myColor,
+              ),
               hintText: hint,
             )),
       ),

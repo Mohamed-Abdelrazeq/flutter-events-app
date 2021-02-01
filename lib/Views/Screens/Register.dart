@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:events_app/Views/Component/MyButton.dart';
-import 'package:events_app/Views/Component/MyTextField.dart';
+import 'package:events_app/Views/Component/MyTextFieldAuth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';

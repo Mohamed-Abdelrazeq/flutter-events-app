@@ -45,7 +45,7 @@ class MyHomePage extends StatelessWidget {
             top: height * .87,
             child: GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, '/PetAdder');
+                Navigator.pushNamed(context, '/AddEventScreen');
               },
               child: MyFloatingActionButton(height: height, width: width),
             ),

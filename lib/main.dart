@@ -2,9 +2,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'Controllers/DateProvider.dart';
 import 'Controllers/UserProvider.dart';
 import 'Controllers/PageProvider.dart';
 import 'Views/Screens/AccountPage.dart';
+import 'Views/Screens/AddEventScreen.dart';
 import 'Views/Screens/EnterScreen.dart';
 import 'Views/Screens/EventScreen.dart';
 import 'Views/Screens/HomePage.dart';
@@ -21,6 +23,7 @@ void main() {
       providers: [
         ChangeNotifierProvider<PageProvider>(create: (_) => PageProvider()),
         ChangeNotifierProvider<UserProvider>(create: (_) => UserProvider()),
+        ChangeNotifierProvider<DateProvider>(create: (_) => DateProvider()),
 
       ],
       child: MyApp(),
@@ -42,6 +45,7 @@ class MyApp extends StatelessWidget {
         '/AccountPage': (context) => AccountPage(),
         '/HomePage': (context) => HomePage(),
         '/EventScreen': (context) => EventScreen(),
+        '/AddEventScreen': (context) => AddEventScreen(),
       },
       home: FutureBuilder(
         // Initialize FlutterFire:
