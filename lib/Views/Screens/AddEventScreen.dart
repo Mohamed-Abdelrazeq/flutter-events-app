@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:events_app/Controllers/AddEventProvider.dart';
+import 'package:events_app/Controllers/MyLocationProvider.dart';
 import 'package:events_app/Views/Component/MyTextField.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+
+
 
 class AddEventScreen extends StatefulWidget {
   @override
@@ -108,22 +111,31 @@ class _AddEventScreenState extends State<AddEventScreen> {
         ],
         duration: Duration(seconds: 2),
       ).show(context);
-    }//else if (){
-    //  print('blu');
-    //  todo add place check
-    //}
-    //else if (){
-    //  print('blu');
-    //  todo add poster
-    //}
+    }else if (Provider.of<MyLocationProvider>(context,listen: false).selectionState == false){
+      Flushbar(
+        title: "Warning",
+        message: "Enter The Location",
+        backgroundColor: flushBarColor,
+        boxShadows: [
+          BoxShadow(
+            color: Colors.red[800],
+            offset: Offset(0.0, 2.0),
+            blurRadius: 3.0,
+          )
+        ],
+        duration: Duration(seconds: 2),
+      ).show(context);
+    }
     else{
       //todo add to firebase
+      Provider.of<MyLocationProvider>(context,listen: false).selectionStateSetter(false);
       Provider.of<AddEventProvider>(context,listen: false).dateSetter(DateTime.now());
       summaryController.clear();
       titleController.clear();
       Navigator.pop(context);
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -272,6 +284,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                 ),
                 FlatButton(
                   onPressed: () {
+                    Navigator.pushNamed(context, '/MyMapPicker');
                     //TODO Pick location
                   },
                   child: Container(
@@ -282,8 +295,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                         borderRadius: BorderRadius.circular(15)
                     ),
                     child: Center(
-                      child: Text(
-                        'Pick Place',
+                      child: Text(Provider.of<MyLocationProvider>(context).selectionState == true ? 'Place Picked' : 'Pick Place',
                         style: TextStyle(color: Colors.blue),
                       ),
                     ),
@@ -331,7 +343,6 @@ class _AddEventScreenState extends State<AddEventScreen> {
               child: FlatButton(
                 onPressed: () {
                   //TODO Add Event
-                  //TODO check fields
                   submissionFunction(context);
                 },
                 child: Container(

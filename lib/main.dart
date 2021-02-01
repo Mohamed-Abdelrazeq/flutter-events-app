@@ -1,3 +1,4 @@
+import 'package:events_app/Controllers/MyLocationProvider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -8,10 +9,10 @@ import 'Controllers/PageProvider.dart';
 import 'Views/Screens/AccountPage.dart';
 import 'Views/Screens/AddEventScreen.dart';
 import 'Views/Screens/EnterScreen.dart';
-import 'Views/Screens/EventScreen.dart';
 import 'Views/Screens/HomePage.dart';
 import 'Views/Screens/Loading.dart';
 import 'Views/Screens/Login.dart';
+import 'Views/Screens/MapPicker.dart';
 import 'Views/Screens/MyHomePage.dart';
 import 'Views/Screens/Register.dart';
 import 'Views/Screens/SomethingIsWrong.dart';
@@ -24,6 +25,7 @@ void main() {
         ChangeNotifierProvider<PageProvider>(create: (_) => PageProvider()),
         ChangeNotifierProvider<UserProvider>(create: (_) => UserProvider()),
         ChangeNotifierProvider<AddEventProvider>(create: (_) => AddEventProvider()),
+        ChangeNotifierProvider<MyLocationProvider>(create: (_) => MyLocationProvider()),
 
       ],
       child: MyApp(),
@@ -44,8 +46,10 @@ class MyApp extends StatelessWidget {
         '/MyHomePage': (context) => MyHomePage(),
         '/AccountPage': (context) => AccountPage(),
         '/HomePage': (context) => HomePage(),
-        '/EventScreen': (context) => EventScreen(),
         '/AddEventScreen': (context) => AddEventScreen(),
+        '/MyMapPicker': (context) => MyMapPicker(),
+
+
       },
       home: FutureBuilder(
         // Initialize FlutterFire:

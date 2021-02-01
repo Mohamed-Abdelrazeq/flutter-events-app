@@ -1,14 +1,17 @@
+import 'package:events_app/Controllers/MyLocationProvider.dart';
 import 'package:events_app/Views/Screens/EventScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
 
+import 'package:provider/provider.dart';
+
 import 'Loading.dart';
 import 'SomethingIsWrong.dart';
 
 class HomePage extends StatelessWidget {
-  Future<String> _determinePosition() async {
+  Future<String> _determinePosition(var context) async {
     bool serviceEnabled;
     LocationPermission permission;
 
@@ -31,7 +34,11 @@ class HomePage extends StatelessWidget {
             'Location permissions are denied (actual value: $permission).');
       }
     }
+
+
+
     var currentCoordinates = await Geolocator.getCurrentPosition();
+    Provider.of<MyLocationProvider>(context,listen: false).locationSetter(currentCoordinates.latitude.toDouble(), currentCoordinates.longitude.toDouble());
     return await _getLocationName(Coordinates(
         currentCoordinates.latitude.toDouble(),
         currentCoordinates.longitude.toDouble()));
@@ -50,7 +57,7 @@ class HomePage extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
 
     return FutureBuilder(
-      future: _determinePosition(),
+      future: _determinePosition(context),
       builder: (context, snapshot) {
         // Check for errors
         if (snapshot.hasError) {
