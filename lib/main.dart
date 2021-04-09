@@ -24,7 +24,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider<PageProvider>(create: (_) => PageProvider()),
-        ChangeNotifierProvider<UserCredentialProvider>(create: (_) => UserCredentialProvider()),
+        ChangeNotifierProvider<UserInfoProvider>(create: (_) => UserInfoProvider()),
         ChangeNotifierProvider<AddEventProvider>(create: (_) => AddEventProvider()),
         ChangeNotifierProvider<MyLocationProvider>(create: (_) => MyLocationProvider()),
       ],

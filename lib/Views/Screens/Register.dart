@@ -21,7 +21,7 @@ class Register extends StatelessWidget {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   //Functions
-  void submissionFunction(var context) async {
+  Future<void> submissionFunction(var context) async {
     //Close Keyboard
     FocusScope.of(context).requestFocus(FocusNode());
     MyFlushBar().show(context, 'Please Wait');
@@ -39,10 +39,10 @@ class Register extends StatelessWidget {
     else {
       //Get Credentials
       UserCredential userCredential = await Authentication().registration(emailController.text, passwordController.text);
-      print(userCredential);
       //Check Credentials
       if (userCredential != null) {
-        Provider.of<UserCredentialProvider>(context).userCredentialSetter(userCredential);
+        Provider.of<UserInfoProvider>(context,listen: false).userCredentialSetter(userCredential);
+        await Authentication().addUser(usernameController.text, emailController.text, phoneController.text);
         Navigator.pushNamed(context, '/MyHomePage');
       }else{
         MyFlushBar().show(context, 'The email is already used or the password is too weak');
@@ -131,8 +131,8 @@ class Register extends StatelessWidget {
                 horizontalPadding: width*.2,
                 verticalPadding: height*.02,
                 myTextColor: Colors.white,
-                myFunc: () {
-                  submissionFunction(context);
+                myFunc: ()async {
+                  await submissionFunction(context);
                   dispose();
                 },
               ),

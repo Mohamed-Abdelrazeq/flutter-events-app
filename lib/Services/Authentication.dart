@@ -1,12 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Authentication {
 
   FirebaseAuth auth = FirebaseAuth.instance;
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
 
   Future<UserCredential> registration(String email, String password)async{
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
           email: email,
           password: password,
       );
@@ -25,7 +27,7 @@ class Authentication {
 
   Future<UserCredential> login(String email, String password)async{
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      UserCredential userCredential = await auth.signInWithEmailAndPassword(
           email: email,
           password: password,
       );
@@ -38,6 +40,23 @@ class Authentication {
       }
     }
     return null;
+  }
+
+  Future<void> addUser(String username,String email,String phone) async {
+    return users
+        .doc(email)
+        .set({
+      'username': username,
+      'email': email,
+      'phone': phone,
+    })
+        .then((value) => print("User Added"))
+        .catchError((error) => print("Failed to add user: $error"));
+  }
+
+  Future getUser(String email)async{
+    var userCredentials = await users.doc(email).get();
+    return userCredentials.data();
   }
 
   }

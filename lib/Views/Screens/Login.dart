@@ -17,7 +17,7 @@ class Login extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  void submissionFunction(var context) async {
+  Future<void> submissionFunction(var context) async {
     //Close Keyboard
     FocusScope.of(context).requestFocus(FocusNode());
     MyFlushBar().show(context, 'Please Wait');
@@ -31,13 +31,14 @@ class Login extends StatelessWidget {
     else {
       //Get Credentials
       UserCredential userCredential = await Authentication().login(_emailController.text, _passwordController.text);
-      print(userCredential);
-      //Text Response
+      //Check Response
       if (userCredential != null) {
-        Provider.of<UserCredentialProvider>(context).userCredentialSetter(userCredential);
+        Map userAdditionalInfo = await Authentication().getUser(_emailController.text);
+        Provider.of<UserInfoProvider>(context,listen: false).userCredentialSetter(userCredential);
+        Provider.of<UserInfoProvider>(context,listen: false).userAdditionalInfoSetter(userAdditionalInfo['username'],userAdditionalInfo['phone']);
+        dispose();
         Navigator.pushNamed(context, '/MyHomePage');
       }else{
-        print('The Email or the Password is not correct');
         MyFlushBar().show(context, 'The Email or the Password is not correct');
       }
     }
@@ -100,9 +101,8 @@ class Login extends StatelessWidget {
                 horizontalPadding: width * .2,
                 verticalPadding: height * .02,
                 myTextColor: Colors.white,
-                myFunc: () {
-                  submissionFunction(context);
-                  dispose();
+                myFunc: () async {
+                  await submissionFunction(context);
                 },
               ),
               SizedBox(height: height * .02),
