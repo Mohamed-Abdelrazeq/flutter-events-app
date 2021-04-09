@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:events_app/Controllers/AddEventProvider.dart';
 import 'package:events_app/Controllers/MyLocationProvider.dart';
 import 'package:events_app/Views/Component/MyTextField.dart';
-import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -22,24 +21,19 @@ class _AddEventScreenState extends State<AddEventScreen> {
 
   @override
   void initState() {
-    summaryController.clear();
-    titleController.clear();
+    _summaryController.clear();
+    _titleController.clear();
     _image = null;
     super.initState();
   }
 
-  final TextEditingController summaryController = TextEditingController();
-
-  final TextEditingController titleController = TextEditingController();
-
-  final flushBarColor = Colors.blue;
+  final TextEditingController _summaryController = TextEditingController();
+  final TextEditingController _titleController = TextEditingController();
 
   File _image;
-
-  final picker = ImagePicker();
-
+  final _picker = ImagePicker();
   Future getImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    final pickedFile = await _picker.getImage(source: ImageSource.gallery);
 
     setState(() {
       if (pickedFile != null) {
@@ -49,93 +43,6 @@ class _AddEventScreenState extends State<AddEventScreen> {
       }
     });
   }
-
-  void submissionFunction(var context) async {
-    //Close Keyboard
-    FocusScope.of(context).requestFocus(FocusNode());
-    //Check textfields
-    if (summaryController.text == '') {
-      Flushbar(
-        title: "Warning",
-        message: "Enter your About",
-        backgroundColor: flushBarColor,
-        boxShadows: [
-          BoxShadow(
-            color: Colors.red[800],
-            offset: Offset(0.0, 2.0),
-            blurRadius: 3.0,
-          )
-        ],
-        duration: Duration(seconds: 2),
-      ).show(context);
-    } else if (titleController.text == '') {
-      Flushbar(
-        title: "Warning",
-        message: "Enter your Title",
-        backgroundColor: flushBarColor,
-        boxShadows: [
-          BoxShadow(
-            color: Colors.red[800],
-            offset: Offset(0.0, 2.0),
-            blurRadius: 3.0,
-          )
-        ],
-        duration: Duration(seconds: 2),
-      ).show(context);
-    } else if (_image == null) {
-      Flushbar(
-        title: "Warning",
-        message: "Pick Poster",
-        backgroundColor: flushBarColor,
-        boxShadows: [
-          BoxShadow(
-            color: Colors.red[800],
-            offset: Offset(0.0, 2.0),
-            blurRadius: 3.0,
-          )
-        ],
-        duration: Duration(seconds: 2),
-      ).show(context);
-    }
-    else if(Provider.of<AddEventProvider>(context,listen: false).eventDate == DateTime.now()){
-      Flushbar(
-        title: "Warning",
-        message: "Enter your Date",
-        backgroundColor: flushBarColor,
-        boxShadows: [
-          BoxShadow(
-            color: Colors.red[800],
-            offset: Offset(0.0, 2.0),
-            blurRadius: 3.0,
-          )
-        ],
-        duration: Duration(seconds: 2),
-      ).show(context);
-    }else if (Provider.of<MyLocationProvider>(context,listen: false).selectionState == false){
-      Flushbar(
-        title: "Warning",
-        message: "Enter The Location",
-        backgroundColor: flushBarColor,
-        boxShadows: [
-          BoxShadow(
-            color: Colors.red[800],
-            offset: Offset(0.0, 2.0),
-            blurRadius: 3.0,
-          )
-        ],
-        duration: Duration(seconds: 2),
-      ).show(context);
-    }
-    else{
-      //todo add to firebase
-      Provider.of<MyLocationProvider>(context,listen: false).selectionStateSetter(false);
-      Provider.of<AddEventProvider>(context,listen: false).dateSetter(DateTime.now());
-      summaryController.clear();
-      titleController.clear();
-      Navigator.pop(context);
-    }
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -188,7 +95,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                 ),
                 MyTextField(
                     myColor: Colors.blue,
-                    myController: titleController,
+                    myController: _titleController,
                     height: height,
                     width: width,
                     myWidth: .8,
@@ -215,7 +122,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                       borderRadius: BorderRadius.circular(height * .02)),
                   child: Center(
                     child: TextField(
-                      controller: summaryController,
+                      controller: _summaryController,
                       keyboardType: TextInputType.multiline,
                       maxLines: 15,
                       cursorColor: Colors.black87,
@@ -245,7 +152,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                 SizedBox(
                   height: height * .02,
                 ),
-                FlatButton(
+                TextButton(
                 onPressed: () {
                      DatePicker.showDatePicker(context,
                          showTitleActions: true,
@@ -282,7 +189,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                 SizedBox(
                   height: height * .02,
                 ),
-                FlatButton(
+                TextButton(
                   onPressed: () {
                     Navigator.pushNamed(context, '/MyMapPicker');
                     //TODO Pick location
@@ -313,7 +220,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                 SizedBox(
                   height: height * .02,
                 ),
-                FlatButton(
+                TextButton(
                   onPressed: () {
                     getImage();
                   },
@@ -340,10 +247,9 @@ class _AddEventScreenState extends State<AddEventScreen> {
             Positioned(
               top: height*.87,
               width: width,
-              child: FlatButton(
+              child: TextButton(
                 onPressed: () {
                   //TODO Add Event
-                  submissionFunction(context);
                 },
                 child: Container(
                   width: width*.8,

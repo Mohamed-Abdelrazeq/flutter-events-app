@@ -1,12 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class UserProvider with ChangeNotifier{
-  String userEmail = '';
 
-  void userEmailSetter(email){
-    this.userEmail = email;
+  UserCredential _userCredential;
+
+  void userCredentialSetter(newUserCredential){
+    _userCredential = newUserCredential;
     notifyListeners();
   }
+
+  UserCredential get userCredential => _userCredential;
 
 }

@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "24253290877",
-    "project_id": "events-app-bd413",
-    "storage_bucket": "events-app-bd413.appspot.com"
+    "project_number": "875778744358",
+    "project_id": "event-app-303510",
+    "storage_bucket": "event-app-303510.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:24253290877:android:a266dbd66573c1f95fd414",
+        "mobilesdk_app_id": "1:875778744358:android:52ef7fd7a03973434086e7",
         "android_client_info": {
           "package_name": "aya.events_app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "24253290877-4mt0klpr71e7h8s2lild1r9sql967701.apps.googleusercontent.com",
+          "client_id": "875778744358-2qarnrgvfac6qsgj34vv5r1bmo6ucncr.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBfibeKKO0PVcdYI6q1gkru70RgR3voT7k"
+          "current_key": "AIzaSyDqxJovadFX7FCt-mdqElimW1djcn4VUAY"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "24253290877-4mt0klpr71e7h8s2lild1r9sql967701.apps.googleusercontent.com",
+              "client_id": "875778744358-2qarnrgvfac6qsgj34vv5r1bmo6ucncr.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

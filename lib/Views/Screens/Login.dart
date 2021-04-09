@@ -1,124 +1,41 @@
-import 'package:events_app/Controllers/UserProvider.dart';
+import 'package:events_app/Services/Authentication.dart';
 import 'package:events_app/Views/Component/MyButton.dart';
+import 'package:events_app/Views/Component/MyFlushBar.dart';
 import 'package:events_app/Views/Component/MyTextFieldAuth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class Login extends StatelessWidget {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
 
-  final Color flushBarColor = Colors.blue;
-
-  Future login({String email, String password, var context}) async {
-    try {
-      await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
-
-      Provider.of<UserProvider>(context, listen: false)
-          .userEmailSetter(email);
-
-      return true;
-    } on FirebaseAuthException catch (e) {
-      print('===================');
-      if (e.code == 'user-not-found') {
-        return 'email';
-      } else if (e.code == 'wrong-password') {
-        return 'password';
-      } else {
-        return 'else';
-      }
-    }
+  void dispose() {
+    _emailController.clear();
+    _passwordController.clear();
   }
+
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   void submissionFunction(var context) async {
     //Close Keyboard
     FocusScope.of(context).requestFocus(FocusNode());
-    //Check textfields
-    if (emailController.text == '') {
-      Flushbar(
-        title: "Warning",
-        message: "Enter your email",
-        backgroundColor: flushBarColor,
-        boxShadows: [
-          BoxShadow(
-            color: Colors.red[800],
-            offset: Offset(0.0, 2.0),
-            blurRadius: 3.0,
-          )
-        ],
-        duration: Duration(seconds: 2),
-      ).show(context);
-    } else if (passwordController.text == '') {
-      Flushbar(
-        title: "Warning",
-        message: "Enter your password",
-        backgroundColor: flushBarColor,
-        boxShadows: [
-          BoxShadow(
-            color: Colors.red[800],
-            offset: Offset(0.0, 2.0),
-            blurRadius: 3.0,
-          )
-        ],
-        duration: Duration(seconds: 2),
-      ).show(context);
-    } else {
-      //make request
-      var myReturn = await login(
-          email: emailController.text,
-          password: passwordController.text,
-          context: context);
-      //test response
-      if (myReturn == true) {
-        print(true);
-        emailController.clear();
-        passwordController.clear();
+    MyFlushBar().show(context, 'Please Wait');
+    //Check TextFields
+    if (_emailController.text == '') {
+      MyFlushBar().show(context, 'Enter your email');
+    } else if (_passwordController.text == '') {
+      MyFlushBar().show(context, 'Enter your password');
+    }
+    //Make Request
+    else {
+      //Get Credentials
+      UserCredential userCredential = await Authentication().login(_emailController.text, _passwordController.text);
+      print(userCredential);
+      //Text Response
+      if (userCredential != null) {
         Navigator.pushNamed(context, '/MyHomePage');
-      } else if (myReturn == 'password') {
-        Flushbar(
-          title: "Warning",
-          message: "Your password is not correct",
-          backgroundColor: flushBarColor,
-          boxShadows: [
-            BoxShadow(
-              color: Colors.red[800],
-              offset: Offset(0.0, 2.0),
-              blurRadius: 3.0,
-            )
-          ],
-          duration: Duration(seconds: 2),
-        ).show(context);
-      } else if (myReturn == 'email') {
-        Flushbar(
-          title: "Warning",
-          message: "Your email in not correct",
-          backgroundColor: flushBarColor,
-          boxShadows: [
-            BoxShadow(
-              color: Colors.red[800],
-              offset: Offset(0.0, 2.0),
-              blurRadius: 3.0,
-            )
-          ],
-          duration: Duration(seconds: 2),
-        ).show(context);
-      } else {
-        Flushbar(
-          title: "Warning",
-          message: "Invalid email and password",
-          backgroundColor: flushBarColor,
-          boxShadows: [
-            BoxShadow(
-              color: Colors.red[800],
-              offset: Offset(0.0, 2.0),
-              blurRadius: 3.0,
-            )
-          ],
-          duration: Duration(seconds: 2),
-        ).show(context);
+      }else{
+        print('The Email or the Password is not correct');
+        MyFlushBar().show(context, 'The Email or the Password is not correct');
       }
     }
   }
@@ -154,7 +71,7 @@ class Login extends StatelessWidget {
               SizedBox(height: height * .04),
               MyTextField(
                   myColor: Colors.blue,
-                  myController: emailController,
+                  myController: _emailController,
                   height: height,
                   width: width,
                   myWidth: .8,
@@ -164,7 +81,7 @@ class Login extends StatelessWidget {
               SizedBox(height: height * .02),
               MyTextField(
                 myColor: Colors.blue,
-                  myController: passwordController,
+                  myController: _passwordController,
                   height: height,
                   width: width,
                   myWidth: .8,
@@ -182,6 +99,7 @@ class Login extends StatelessWidget {
                 myTextColor: Colors.white,
                 myFunc: () {
                   submissionFunction(context);
+                  dispose();
                 },
               ),
               SizedBox(height: height * .02),

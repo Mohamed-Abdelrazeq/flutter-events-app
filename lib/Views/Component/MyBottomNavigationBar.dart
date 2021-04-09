@@ -14,7 +14,7 @@ class MyBottomNavigationBar extends StatelessWidget {
   final double height;
   final double width;
 
-  final int tranDuration = 200;//TODO
+  final int tranDuration = 200;
 
   final Color notSelectedColor = Colors.blue.withOpacity(.5);
   final Color selectedColor = Colors.blue;

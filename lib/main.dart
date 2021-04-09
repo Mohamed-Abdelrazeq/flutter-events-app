@@ -26,7 +26,6 @@ void main() {
         ChangeNotifierProvider<UserProvider>(create: (_) => UserProvider()),
         ChangeNotifierProvider<AddEventProvider>(create: (_) => AddEventProvider()),
         ChangeNotifierProvider<MyLocationProvider>(create: (_) => MyLocationProvider()),
-
       ],
       child: MyApp(),
     ),
@@ -35,7 +34,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -48,8 +46,6 @@ class MyApp extends StatelessWidget {
         '/HomePage': (context) => HomePage(),
         '/AddEventScreen': (context) => AddEventScreen(),
         '/MyMapPicker': (context) => MyMapPicker(),
-
-
       },
       home: FutureBuilder(
         // Initialize FlutterFire:

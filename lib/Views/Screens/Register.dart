@@ -1,174 +1,64 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:events_app/Views/Component/MyButton.dart';
+import 'package:events_app/Views/Component/MyFlushBar.dart';
 import 'package:events_app/Views/Component/MyTextFieldAuth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import '../../Services/Authentication.dart';
 
-class Register extends StatelessWidget {
+class Register extends StatefulWidget {
 
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController usernameController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
+  @override
+  _RegisterState createState() => _RegisterState();
+}
 
-  final Color flushBarColor = Colors.blue;
+class _RegisterState extends State<Register> {
 
-  Future register({String email,String password}) async {
-    try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: email,
-          password: password
-      );
-      return true;
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        return 'password';
-      } else if (e.code == 'email-already-in-use') {
-        return 'email' ;
-      }
-    } catch (e) {
-      return 'else';
-    }
+  @override
+  void dispose() {
+    super.dispose();
+    emailController.clear();
+    passwordController.clear();
+    usernameController.clear();
+    phoneController.clear();
   }
-
+  //Controllers
+  TextEditingController emailController = TextEditingController();
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  //Constants
+  Color flushBarColor = Colors.blue;
+  //Functions
   void submissionFunction(var context) async {
     //Close Keyboard
     FocusScope.of(context).requestFocus(FocusNode());
-    //Check textfields
+    MyFlushBar().show(context, 'Please Wait');
+    //Check TextFields
     if (emailController.text == '') {
-      Flushbar(
-        title: "Warning",
-        message: "Enter your email",
-        backgroundColor: flushBarColor,
-        boxShadows: [
-          BoxShadow(
-            color: Colors.red[800],
-            offset: Offset(0.0, 2.0),
-            blurRadius: 3.0,
-          )
-        ],
-        duration: Duration(seconds: 2),
-      ).show(context);
+      MyFlushBar().show(context, 'Enter your email');
     } else if (passwordController.text == '') {
-      Flushbar(
-        title: "Warning",
-        message: "Enter your password",
-        backgroundColor: flushBarColor,
-        boxShadows: [
-          BoxShadow(
-            color: Colors.red[800],
-            offset: Offset(0.0, 2.0),
-            blurRadius: 3.0,
-          )
-        ],
-        duration: Duration(seconds: 2),
-      ).show(context);
+      MyFlushBar().show(context, 'Enter your email');
     } else if (usernameController.text == '') {
-      Flushbar(
-        title: "Warning",
-        message: "Enter your username",
-        backgroundColor: flushBarColor,
-        boxShadows: [
-          BoxShadow(
-            color: Colors.red[800],
-            offset: Offset(0.0, 2.0),
-            blurRadius: 3.0,
-          )
-        ],
-        duration: Duration(seconds: 2),
-      ).show(context);
+      MyFlushBar().show(context, 'Enter your email');
     }else if (phoneController.text == '') {
-      Flushbar(
-        title: "Warning",
-        message: "Enter your phone number",
-        backgroundColor: flushBarColor,
-        boxShadows: [
-          BoxShadow(
-            color: Colors.red[800],
-            offset: Offset(0.0, 2.0),
-            blurRadius: 3.0,
-          )
-        ],
-        duration: Duration(seconds: 2),
-      ).show(context);
+      MyFlushBar().show(context, 'Enter your email');
     }
+    //Make Request
     else {
-      //make request
-      var myReturn = await register(
-        email: emailController.text,
-        password: passwordController.text,
-      );
-      //test response
-      if (myReturn == true) {
-        await addUser(email: emailController.text,password: passwordController.text,phone: phoneController.text,username: usernameController.text);
-        emailController.clear();
-        passwordController.clear();
-        usernameController.clear();
-        phoneController.clear();
+      //Get Credentials
+      UserCredential userCredential = await Authentication().registration(emailController.text, passwordController.text);
+      print(userCredential);
+      //Check Credentials
+      if (userCredential != null) {
         Navigator.pushNamed(context, '/MyHomePage');
-      } else if (myReturn == 'password') {
-        passwordController.clear();
-        Flushbar(
-          title: "Warning",
-          message: "Your password is not valid",
-          backgroundColor: flushBarColor,
-          boxShadows: [
-            BoxShadow(
-              color: Colors.red[800],
-              offset: Offset(0.0, 2.0),
-              blurRadius: 3.0,
-            )
-          ],
-          duration: Duration(seconds: 2),
-        ).show(context);
-      } else if (myReturn == 'email') {
-        emailController.clear();
-        Flushbar(
-          title: "Warning",
-          message: "Your email in not valid",
-          backgroundColor: flushBarColor,
-          boxShadows: [
-            BoxShadow(
-              color: Colors.red[800],
-              offset: Offset(0.0, 2.0),
-              blurRadius: 3.0,
-            )
-          ],
-          duration: Duration(seconds: 2),
-        ).show(context);
-      } else {
-        emailController.clear();
-        passwordController.clear();
-        Flushbar(
-          title: "Warning",
-          message: "Invalid email and password",
-          backgroundColor: flushBarColor,
-          boxShadows: [
-            BoxShadow(
-              color: Colors.red[800],
-              offset: Offset(0.0, 2.0),
-              blurRadius: 3.0,
-            )
-          ],
-          duration: Duration(seconds: 2),
-        ).show(context);
+      }else{
+        print('The email is already used or the password is too weak');
+        MyFlushBar().show(context, 'The email is already used or the password is too weak');
       }
     }
   }
 
-  Future<void> addUser({String email, String password, String username,String phone}) {
 
-    CollectionReference users = FirebaseFirestore.instance.collection('Users');
-    return users.add({
-      'Email': email,
-      'Password': password,
-      'Username': username,
-      'phone': phone,
-    })
-        .then((value) => print("sent"))
-        .catchError((error) => print("Failed: $error"));
-  }
 
   @override
   Widget build(BuildContext context) {
