@@ -3,31 +3,23 @@ import 'package:events_app/Views/Component/MyFlushBar.dart';
 import 'package:events_app/Views/Component/MyTextFieldAuth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../../Controllers/UserCredentialProvider.dart';
 import '../../Services/Authentication.dart';
+import 'package:provider/provider.dart';
 
-class Register extends StatefulWidget {
+class Register extends StatelessWidget {
 
-  @override
-  _RegisterState createState() => _RegisterState();
-}
-
-class _RegisterState extends State<Register> {
-
-  @override
   void dispose() {
-    super.dispose();
     emailController.clear();
     passwordController.clear();
     usernameController.clear();
     phoneController.clear();
   }
   //Controllers
-  TextEditingController emailController = TextEditingController();
-  TextEditingController usernameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
-  //Constants
-  Color flushBarColor = Colors.blue;
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
   //Functions
   void submissionFunction(var context) async {
     //Close Keyboard
@@ -50,16 +42,13 @@ class _RegisterState extends State<Register> {
       print(userCredential);
       //Check Credentials
       if (userCredential != null) {
+        Provider.of<UserCredentialProvider>(context).userCredentialSetter(userCredential);
         Navigator.pushNamed(context, '/MyHomePage');
       }else{
-        print('The email is already used or the password is too weak');
         MyFlushBar().show(context, 'The email is already used or the password is too weak');
       }
     }
   }
-
-
-
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -144,6 +133,7 @@ class _RegisterState extends State<Register> {
                 myTextColor: Colors.white,
                 myFunc: () {
                   submissionFunction(context);
+                  dispose();
                 },
               ),
               SizedBox(height: height * .02),

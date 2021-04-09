@@ -1,9 +1,11 @@
+import 'package:events_app/Controllers/UserCredentialProvider.dart';
 import 'package:events_app/Services/Authentication.dart';
 import 'package:events_app/Views/Component/MyButton.dart';
 import 'package:events_app/Views/Component/MyFlushBar.dart';
 import 'package:events_app/Views/Component/MyTextFieldAuth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Login extends StatelessWidget {
 
@@ -32,6 +34,7 @@ class Login extends StatelessWidget {
       print(userCredential);
       //Text Response
       if (userCredential != null) {
+        Provider.of<UserCredentialProvider>(context).userCredentialSetter(userCredential);
         Navigator.pushNamed(context, '/MyHomePage');
       }else{
         print('The Email or the Password is not correct');

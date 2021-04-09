@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'Controllers/AddEventProvider.dart';
-import 'Controllers/UserProvider.dart';
+import 'Controllers/UserCredentialProvider.dart';
 import 'Controllers/PageProvider.dart';
+import 'Controllers/UserCredentialProvider.dart';
 import 'Views/Screens/AccountPage.dart';
 import 'Views/Screens/AddEventScreen.dart';
 import 'Views/Screens/EnterScreen.dart';
@@ -23,7 +24,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider<PageProvider>(create: (_) => PageProvider()),
-        ChangeNotifierProvider<UserProvider>(create: (_) => UserProvider()),
+        ChangeNotifierProvider<UserCredentialProvider>(create: (_) => UserCredentialProvider()),
         ChangeNotifierProvider<AddEventProvider>(create: (_) => AddEventProvider()),
         ChangeNotifierProvider<MyLocationProvider>(create: (_) => MyLocationProvider()),
       ],
