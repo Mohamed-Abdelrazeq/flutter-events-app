@@ -41,7 +41,7 @@ class Register extends StatelessWidget {
       UserCredential userCredential = await Authentication().registration(emailController.text, passwordController.text);
       //Check Credentials
       if (userCredential != null) {
-        Provider.of<UserInfoProvider>(context,listen: false).userCredentialSetter(userCredential);
+        Provider.of<UserInfoController>(context,listen: false).userCredentialSetter(userCredential);
         await Authentication().addUser(usernameController.text, emailController.text, phoneController.text);
         Navigator.pushNamed(context, '/MyHomePage');
       }else{

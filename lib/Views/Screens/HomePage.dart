@@ -38,7 +38,7 @@ class HomePage extends StatelessWidget {
 
 
     var currentCoordinates = await Geolocator.getCurrentPosition();
-    Provider.of<MyLocationProvider>(context,listen: false).locationSetter(currentCoordinates.latitude.toDouble(), currentCoordinates.longitude.toDouble());
+    Provider.of<MyLocationController>(context,listen: false).locationSetter(currentCoordinates.latitude.toDouble(), currentCoordinates.longitude.toDouble());
     return await _getLocationName(Coordinates(
         currentCoordinates.latitude.toDouble(),
         currentCoordinates.longitude.toDouble()));

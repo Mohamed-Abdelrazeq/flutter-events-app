@@ -34,7 +34,7 @@ class MyBottomNavigationBar extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: (){
-                  Provider.of<PageProvider>(context,listen: false).pageController.animateToPage(
+                  Provider.of<CurrentPageContoller>(context,listen: false).pageController.animateToPage(
                     0,
                     duration: Duration(milliseconds: tranDuration),
                     curve: Curves.easeInOut,
@@ -43,11 +43,11 @@ class MyBottomNavigationBar extends StatelessWidget {
                   child: Icon(
                 Icons.home,
                 size: height * .045,
-                color: Provider.of<PageProvider>(context,).pageNumber == 0 ? selectedColor : notSelectedColor
+                color: Provider.of<CurrentPageContoller>(context,).pageNumber == 0 ? selectedColor : notSelectedColor
               )),
               GestureDetector(
                 onTap: (){
-                  Provider.of<PageProvider>(context,listen: false).pageController.animateToPage(
+                  Provider.of<CurrentPageContoller>(context,listen: false).pageController.animateToPage(
                     1,
                     duration: Duration(milliseconds: tranDuration),
                     curve: Curves.easeInOut,
@@ -56,7 +56,7 @@ class MyBottomNavigationBar extends StatelessWidget {
                 child: Icon(
                   Icons.pets,
                   size: height * .045,
-                    color: Provider.of<PageProvider>(context,).pageNumber == 1 ? selectedColor : notSelectedColor
+                    color: Provider.of<CurrentPageContoller>(context,).pageNumber == 1 ? selectedColor : notSelectedColor
                 ),
               ),
             ],

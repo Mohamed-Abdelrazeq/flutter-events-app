@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-class MyLocationProvider with ChangeNotifier{
+class MyLocationController with ChangeNotifier{
+
   var x;
   var y;
 
@@ -25,4 +26,5 @@ class MyLocationProvider with ChangeNotifier{
     partyY = myPartyY;
     notifyListeners();
   }
+
 }

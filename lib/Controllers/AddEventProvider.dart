@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AddEventProvider with ChangeNotifier{
+class AddEventController with ChangeNotifier{
   DateTime eventDate = DateTime.now();
   var location;
   bool locationSelected = false;

@@ -1,8 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class UserInfoProvider with ChangeNotifier{
+class UserInfoController with ChangeNotifier{
 
   UserCredential _userCredential;
   String _username;

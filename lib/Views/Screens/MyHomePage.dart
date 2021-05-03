@@ -28,9 +28,9 @@ class MyHomePage extends StatelessWidget {
               height: height * .92,
               width: width,
               child: PageView(
-                controller: Provider.of<PageProvider>(context).pageController,
+                controller: Provider.of<CurrentPageContoller>(context).pageController,
                 onPageChanged: (newPage) {
-                  Provider.of<PageProvider>(context, listen: false)
+                  Provider.of<CurrentPageContoller>(context, listen: false)
                       .changePage(newPage);
                 },
                 children: [

@@ -25,7 +25,7 @@ class _MyMapPickerState extends State<MyMapPicker> {
   @override
   Widget build(BuildContext context) {
     CameraPosition cameraPosition = CameraPosition(
-      target: LatLng(Provider.of<MyLocationProvider>(context).x,Provider.of<MyLocationProvider>(context).y),
+      target: LatLng(Provider.of<MyLocationController>(context).x,Provider.of<MyLocationController>(context).y),
       zoom: 1,
     );
     return Scaffold(
@@ -80,8 +80,8 @@ class _MyMapPickerState extends State<MyMapPicker> {
           onTap: (){
             print(cameraPosition.target.latitude);
             print(cameraPosition.target.longitude);
-            Provider.of<MyLocationProvider>(context,listen: false).selectionStateSetter(true);
-            Provider.of<MyLocationProvider>(context,listen: false).partyLocationSetter(cameraPosition.target.latitude, cameraPosition.target.longitude);
+            Provider.of<MyLocationController>(context,listen: false).selectionStateSetter(true);
+            Provider.of<MyLocationController>(context,listen: false).partyLocationSetter(cameraPosition.target.latitude, cameraPosition.target.longitude);
             Navigator.pop(context);
           },
           child: Container(

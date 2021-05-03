@@ -34,8 +34,8 @@ class Login extends StatelessWidget {
       //Check Response
       if (userCredential != null) {
         Map userAdditionalInfo = await Authentication().getUser(_emailController.text);
-        Provider.of<UserInfoProvider>(context,listen: false).userCredentialSetter(userCredential);
-        Provider.of<UserInfoProvider>(context,listen: false).userAdditionalInfoSetter(userAdditionalInfo['username'],userAdditionalInfo['phone']);
+        Provider.of<UserInfoController>(context,listen: false).userCredentialSetter(userCredential);
+        Provider.of<UserInfoController>(context,listen: false).userAdditionalInfoSetter(userAdditionalInfo['username'],userAdditionalInfo['phone']);
         dispose();
         Navigator.pushNamed(context, '/MyHomePage');
       }else{

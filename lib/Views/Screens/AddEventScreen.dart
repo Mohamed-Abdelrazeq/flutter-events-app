@@ -1,12 +1,10 @@
-import 'dart:io';
-
 import 'package:events_app/Controllers/AddEventProvider.dart';
+import 'package:events_app/Controllers/ImagePickerController.dart';
 import 'package:events_app/Controllers/MyLocationProvider.dart';
 import 'package:events_app/Views/Component/MyTextField.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 
@@ -18,31 +16,8 @@ class AddEventScreen extends StatefulWidget {
 }
 
 class _AddEventScreenState extends State<AddEventScreen> {
-
-  @override
-  void initState() {
-    _summaryController.clear();
-    _titleController.clear();
-    _image = null;
-    super.initState();
-  }
-
   final TextEditingController _summaryController = TextEditingController();
   final TextEditingController _titleController = TextEditingController();
-
-  File _image;
-  final _picker = ImagePicker();
-  Future getImage() async {
-    final pickedFile = await _picker.getImage(source: ImageSource.gallery);
-
-    setState(() {
-      if (pickedFile != null) {
-        _image = File(pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -158,7 +133,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                          showTitleActions: true,
                          minTime: DateTime(2021, 1, 1),
                          maxTime: DateTime(2030, 1, 1), onChanged: (date) {
-                           Provider.of<AddEventProvider>(context,listen: false).dateSetter(date);
+                           Provider.of<AddEventController>(context,listen: false).dateSetter(date);
                          }, onConfirm: (date) {
                          }, currentTime: DateTime.now(), locale: LocaleType.en);
                 },
@@ -171,7 +146,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                   ),
                   child: Center(
                     child: Text(
-                      Provider.of<AddEventProvider>(context).eventDate.toString().replaceRange(10,Provider.of<AddEventProvider>(context).eventDate.toString().length, ''),
+                      Provider.of<AddEventController>(context).eventDate.toString().replaceRange(10,Provider.of<AddEventController>(context).eventDate.toString().length, ''),
                       style: TextStyle(color: Colors.blue),
                     ),
                   ),
@@ -202,7 +177,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                         borderRadius: BorderRadius.circular(15)
                     ),
                     child: Center(
-                      child: Text(Provider.of<MyLocationProvider>(context).selectionState == true ? 'Place Picked' : 'Pick Place',
+                      child: Text(Provider.of<MyLocationController>(context).selectionState == true ? 'Place Picked' : 'Pick Place',
                         style: TextStyle(color: Colors.blue),
                       ),
                     ),
@@ -221,8 +196,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
                   height: height * .02,
                 ),
                 TextButton(
-                  onPressed: () {
-                    getImage();
+                  onPressed: () async {
+                    await Provider.of<ImagePickerController>(context,listen: false).getImage();
                   },
                   child: Container(
                     width: width,
@@ -233,7 +208,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                     ),
                     child: Center(
                       child: Text(
-                        _image == null ? 'Pick Poster' : 'Image Selected',
+                        Provider.of<ImagePickerController>(context).image == null ? 'Pick Poster' : 'Image Selected',
                         style: TextStyle(color: Colors.blue),
                       ),
                     ),

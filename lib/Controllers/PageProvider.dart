@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class PageProvider with ChangeNotifier{
+class CurrentPageContoller with ChangeNotifier{
   int pageNumber = 0;
 
   PageController pageController = PageController();

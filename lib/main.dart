@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'Controllers/AddEventProvider.dart';
+import 'Controllers/ImagePickerController.dart';
 import 'Controllers/UserCredentialProvider.dart';
 import 'Controllers/PageProvider.dart';
-import 'Controllers/UserCredentialProvider.dart';
 import 'Views/Screens/AccountPage.dart';
 import 'Views/Screens/AddEventScreen.dart';
 import 'Views/Screens/EnterScreen.dart';
@@ -23,10 +23,11 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider<PageProvider>(create: (_) => PageProvider()),
-        ChangeNotifierProvider<UserInfoProvider>(create: (_) => UserInfoProvider()),
-        ChangeNotifierProvider<AddEventProvider>(create: (_) => AddEventProvider()),
-        ChangeNotifierProvider<MyLocationProvider>(create: (_) => MyLocationProvider()),
+        ChangeNotifierProvider<CurrentPageContoller>(create: (_) => CurrentPageContoller()),
+        ChangeNotifierProvider<UserInfoController>(create: (_) => UserInfoController()),
+        ChangeNotifierProvider<AddEventController>(create: (_) => AddEventController()),
+        ChangeNotifierProvider<MyLocationController>(create: (_) => MyLocationController()),
+        ChangeNotifierProvider<ImagePickerController>(create: (_) => ImagePickerController()),
       ],
       child: MyApp(),
     ),
