@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:events_app/Controllers/MyLocationProvider.dart';
+import 'package:events_app/Controllers/MyLocationController.dart';
 import 'package:flutter/material.dart';
 import 'package:map_pin_picker/map_pin_picker.dart';
 

@@ -1,12 +1,12 @@
-import 'package:events_app/Controllers/MyLocationProvider.dart';
+import 'package:events_app/Controllers/MyLocationController.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'Controllers/AddEventProvider.dart';
+import 'Controllers/AddEventController.dart';
 import 'Controllers/ImagePickerController.dart';
-import 'Controllers/UserCredentialProvider.dart';
-import 'Controllers/PageProvider.dart';
+import 'Controllers/UserCredentialController.dart';
+import 'Controllers/CurrentPageController.dart';
 import 'Views/Screens/AccountPage.dart';
 import 'Views/Screens/AddEventScreen.dart';
 import 'Views/Screens/EnterScreen.dart';

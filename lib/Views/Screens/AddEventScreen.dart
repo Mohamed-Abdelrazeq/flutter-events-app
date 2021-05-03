@@ -1,6 +1,7 @@
-import 'package:events_app/Controllers/AddEventProvider.dart';
+import 'package:events_app/Controllers/AddEventController.dart';
 import 'package:events_app/Controllers/ImagePickerController.dart';
-import 'package:events_app/Controllers/MyLocationProvider.dart';
+import 'package:events_app/Controllers/MyLocationController.dart';
+import 'package:events_app/Services/ImageStorage.dart';
 import 'package:events_app/Views/Component/MyTextField.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -58,6 +59,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                 SizedBox(
                   height: height * .02,
                 ),
+
                 Text(
                   'Title',
                   style: TextStyle(
@@ -80,6 +82,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                 SizedBox(
                   height: height * .02,
                 ),
+
                 Text(
                   'About',
                   style: TextStyle(
@@ -117,6 +120,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                 SizedBox(
                   height: height * .02,
                 ),
+
                 Text(
                   'Date',
                   style: TextStyle(
@@ -131,7 +135,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                 onPressed: () {
                      DatePicker.showDatePicker(context,
                          showTitleActions: true,
-                         minTime: DateTime(2021, 1, 1),
+                         minTime: DateTime.now(),
                          maxTime: DateTime(2030, 1, 1), onChanged: (date) {
                            Provider.of<AddEventController>(context,listen: false).dateSetter(date);
                          }, onConfirm: (date) {
@@ -154,6 +158,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                 SizedBox(
                   height: height * .02,
                 ),
+
                 Text(
                   'Location',
                   style: TextStyle(
@@ -185,6 +190,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                 SizedBox(
                   height: height * .02,
                 ),
+
                 Text(
                   'Poster',
                   style: TextStyle(
@@ -223,8 +229,9 @@ class _AddEventScreenState extends State<AddEventScreen> {
               top: height*.87,
               width: width,
               child: TextButton(
-                onPressed: () {
+                onPressed: () async {
                   //TODO Add Event
+                  await ImageStorage().uploadFile(Provider.of<ImagePickerController>(context,listen: false).image);
                 },
                 child: Container(
                   width: width*.8,

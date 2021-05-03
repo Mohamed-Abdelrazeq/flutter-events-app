@@ -1,6 +1,6 @@
-import 'package:events_app/Controllers/PageProvider.dart';
+import 'package:events_app/Controllers/CurrentPageController.dart';
 import 'package:flutter/material.dart';
-import '../../Controllers/PageProvider.dart';
+import '../../Controllers/CurrentPageController.dart';
 import 'package:provider/provider.dart';
 
 

@@ -1,4 +1,4 @@
-import 'package:events_app/Controllers/PageProvider.dart';
+import 'package:events_app/Controllers/CurrentPageController.dart';
 import 'package:events_app/Views/Component/MyBottomNavigationBar.dart';
 import 'package:events_app/Views/Component/MyFloatingActionButton.dart';
 import 'package:flutter/material.dart';

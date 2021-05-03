@@ -1,4 +1,4 @@
-import 'package:events_app/Controllers/UserCredentialProvider.dart';
+import 'package:events_app/Controllers/UserCredentialController.dart';
 import 'package:events_app/Services/Authentication.dart';
 import 'package:events_app/Views/Component/MyButton.dart';
 import 'package:events_app/Views/Component/MyFlushBar.dart';

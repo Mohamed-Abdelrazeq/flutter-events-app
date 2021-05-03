@@ -1,4 +1,4 @@
-import 'package:events_app/Controllers/MyLocationProvider.dart';
+import 'package:events_app/Controllers/MyLocationController.dart';
 import 'package:events_app/Views/Screens/EventScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

@@ -3,7 +3,7 @@ import 'package:events_app/Views/Component/MyFlushBar.dart';
 import 'package:events_app/Views/Component/MyTextFieldAuth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../../Controllers/UserCredentialProvider.dart';
+import '../../Controllers/UserCredentialController.dart';
 import '../../Services/Authentication.dart';
 import 'package:provider/provider.dart';
 
