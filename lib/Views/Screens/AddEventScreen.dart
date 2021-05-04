@@ -234,7 +234,6 @@ class _AddEventScreenState extends State<AddEventScreen> {
               child: TextButton(
                 onPressed: () async {
                   //TODO Add Event
-                  await ImageStorage().uploadFile(Provider.of<ImagePickerController>(context,listen: false).image);
                 },
                 child: Container(
                   width: width*.8,
