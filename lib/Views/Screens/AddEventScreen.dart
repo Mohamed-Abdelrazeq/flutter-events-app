@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:provider/provider.dart';
 
+import 'PleaseLogin.dart';
+
 
 
 class AddEventScreen extends StatefulWidget {
@@ -259,31 +261,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
           ],
         ),
       ),
-    ) : Scaffold(
-      body: Center(
-        child: InkWell(
-          onTap: (){
-            Navigator.pop(context);
-          },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image(
-                image: AssetImage('images/login.png'),
-                width: width*.7,
-              ),
-              Text(
-                'You Need To Login',
-                style: TextStyle(
-                    color: Colors.black.withOpacity(.8),
-                    fontWeight: FontWeight.bold,
-                    fontSize: height*.04
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+    ) : PleaseLogin(width: width, height: height);
   }
 }
+
