@@ -7,19 +7,19 @@ class ImageStorage with ChangeNotifier {
   firebase_storage.FirebaseStorage _storageInstance = firebase_storage.FirebaseStorage.instance;
   String _downloadURL;
 
-  Future<void> uploadFile(File file) async {
+  Future<void> uploadFile(File file,String name) async {
     try {
       await _storageInstance
-          .ref('a.png')
+          .ref('$name.png')
           .putFile(file);
     } catch (e) {
       print(e);
     }
   }
 
-  Future<void> downloadURL() async {
+  Future<void> downloadURL(String name) async {
     String downloadURL = await _storageInstance
-        .ref('a.png')
+        .ref('$name.png')
         .getDownloadURL();
     this._downloadURL = downloadURL;
     print(_downloadURL);

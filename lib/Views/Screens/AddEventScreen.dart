@@ -3,6 +3,7 @@ import 'package:events_app/Controllers/LocationController.dart';
 import 'package:events_app/Controllers/UserCredentialController.dart';
 import 'package:events_app/Model/EventModel.dart';
 import 'package:events_app/Services/ImageStorage.dart';
+import 'package:events_app/Views/Component/MyFlushBar.dart';
 import 'package:events_app/Views/Component/MyTextField.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -234,8 +235,10 @@ class _AddEventScreenState extends State<AddEventScreen> {
               width: width,
               child: TextButton(
                 onPressed: () async {
-                  await ImageStorage().uploadFile(Provider.of<ImagePickerController>(context,listen: false).image);
-                  await Provider.of<ImageStorage>(context,listen: false).downloadURL();
+
+                  MyFlushBar().show(context, 'Please Wait');
+                  await ImageStorage().uploadFile(Provider.of<ImagePickerController>(context,listen: false).image,_titleController.text.trim());
+                  await Provider.of<ImageStorage>(context,listen: false).downloadURL(_titleController.text.trim());
                   await EventModel(
                       title: _titleController.text,
                       about: _summaryController.text,
@@ -244,6 +247,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
                       yAxis:  Provider.of<LocationController>(context,listen: false).getSelectedPartyLocationYAxis,
                       posterUrl: Provider.of<ImageStorage>(context,listen: false).getDownloadURL,
                   ).addEvent();
+                  Navigator.pop(context);
+
                 },
                 child: Container(
                   width: width*.8,
