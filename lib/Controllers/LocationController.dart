@@ -23,8 +23,8 @@ class LocationController with ChangeNotifier{
   bool   _selectionBool = false;
 
   bool   get getSelectionBool => _selectionBool;
-  bool   get selectedPartyLocationXAxis => _selectedPartyLocationXAxis;
-  bool   get selectedPartyLocationYAxis => _selectedPartyLocationYAxis;
+  double get getSelectedPartyLocationXAxis => _selectedPartyLocationXAxis;
+  double get getSelectedPartyLocationYAxis => _selectedPartyLocationYAxis;
 
   set setSelectedPartyLocationXAxis(selectedPartyLocationXAxis){
     _selectedPartyLocationXAxis = selectedPartyLocationXAxis;

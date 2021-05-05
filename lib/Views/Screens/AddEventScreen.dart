@@ -1,7 +1,7 @@
-import 'package:events_app/Controllers/AddEventController.dart';
 import 'package:events_app/Controllers/ImagePickerController.dart';
 import 'package:events_app/Controllers/LocationController.dart';
 import 'package:events_app/Controllers/UserCredentialController.dart';
+import 'package:events_app/Model/EventModel.dart';
 import 'package:events_app/Services/ImageStorage.dart';
 import 'package:events_app/Views/Component/MyTextField.dart';
 import 'package:flutter/cupertino.dart';
@@ -22,7 +22,7 @@ class AddEventScreen extends StatefulWidget {
 class _AddEventScreenState extends State<AddEventScreen> {
   final TextEditingController _summaryController = TextEditingController();
   final TextEditingController _titleController = TextEditingController();
-
+  DateTime _eventDate =  DateTime.now();
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -140,7 +140,9 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           showTitleActions: true,
                           minTime: DateTime.now(),
                           maxTime: DateTime(2030, 1, 1), onChanged: (date) {
-                            Provider.of<AddEventController>(context,listen: false).dateSetter(date);
+                        setState(() {
+                          _eventDate = date;
+                        });
                           }, onConfirm: (date) {
                           }, currentTime: DateTime.now(), locale: LocaleType.en);
                     },
@@ -153,7 +155,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                       ),
                       child: Center(
                         child: Text(
-                          Provider.of<AddEventController>(context).eventDate.toString().replaceRange(10,Provider.of<AddEventController>(context).eventDate.toString().length, ''),
+                          _eventDate.toString().substring(0,10),
                           style: TextStyle(color: Colors.blue),
                         ),
                       ),
@@ -175,7 +177,6 @@ class _AddEventScreenState extends State<AddEventScreen> {
                   TextButton(
                     onPressed: () {
                       Navigator.pushNamed(context, '/MyMapPicker');
-                      //TODO Pick location
                     },
                     child: Container(
                       width: width,
@@ -233,7 +234,16 @@ class _AddEventScreenState extends State<AddEventScreen> {
               width: width,
               child: TextButton(
                 onPressed: () async {
-                  //TODO Add Event
+                  await ImageStorage().uploadFile(Provider.of<ImagePickerController>(context,listen: false).image);
+                  await Provider.of<ImageStorage>(context,listen: false).downloadURL();
+                  await EventModel(
+                      title: _titleController.text,
+                      about: _summaryController.text,
+                      date: _eventDate,
+                      xAxis: Provider.of<LocationController>(context,listen: false).getSelectedPartyLocationXAxis,
+                      yAxis:  Provider.of<LocationController>(context,listen: false).getSelectedPartyLocationYAxis,
+                      posterUrl: Provider.of<ImageStorage>(context,listen: false).getDownloadURL,
+                  ).addEvent();
                 },
                 child: Container(
                   width: width*.8,

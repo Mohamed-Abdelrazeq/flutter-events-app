@@ -1,27 +1,31 @@
 import 'dart:io';
-
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:flutter/material.dart';
 
-class ImageStorage{
+class ImageStorage with ChangeNotifier {
 
-  firebase_storage.FirebaseStorage storageInstance = firebase_storage.FirebaseStorage.instance;
+  firebase_storage.FirebaseStorage _storageInstance = firebase_storage.FirebaseStorage.instance;
+  String _downloadURL;
 
   Future<void> uploadFile(File file) async {
     try {
-      await storageInstance
-          .ref('file-to-upload.png')
+      await _storageInstance
+          .ref('a.png')
           .putFile(file);
     } catch (e) {
       print(e);
     }
   }
 
-  Future<String> downloadURL() async {
-    String downloadURL = await storageInstance
-        .ref('file-to-upload.png')
+  Future<void> downloadURL() async {
+    String downloadURL = await _storageInstance
+        .ref('a.png')
         .getDownloadURL();
-
-    return downloadURL;
+    this._downloadURL = downloadURL;
+    print(_downloadURL);
+    notifyListeners();
   }
+
+  String get getDownloadURL => _downloadURL;
 
 }

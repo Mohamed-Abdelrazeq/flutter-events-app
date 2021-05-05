@@ -3,7 +3,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'Controllers/AddEventController.dart';
 import 'Controllers/ImagePickerController.dart';
 import 'Controllers/UserCredentialController.dart';
 import 'Controllers/CurrentPageController.dart';
@@ -17,6 +16,7 @@ import 'Views/Screens/MapPicker.dart';
 import 'Views/Screens/MyHomePage.dart';
 import 'Views/Screens/Register.dart';
 import 'Views/Screens/SomethingIsWrong.dart';
+import 'Services/ImageStorage.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,9 +25,9 @@ void main() {
       providers: [
         ChangeNotifierProvider<CurrentPageContoller>(create: (_) => CurrentPageContoller()),
         ChangeNotifierProvider<UserInfoController>(create: (_) => UserInfoController()),
-        ChangeNotifierProvider<AddEventController>(create: (_) => AddEventController()),
         ChangeNotifierProvider<LocationController>(create: (_) => LocationController()),
         ChangeNotifierProvider<ImagePickerController>(create: (_) => ImagePickerController()),
+        ChangeNotifierProvider<ImageStorage>(create: (_) => ImageStorage()),
       ],
       child: MyApp(),
     ),
