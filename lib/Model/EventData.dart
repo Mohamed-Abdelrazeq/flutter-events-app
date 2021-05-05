@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class EventData {
-  EventData({
+class EventModel {
+  EventModel({
     @required this.name,
     @required this.about,
     @required this.date,
