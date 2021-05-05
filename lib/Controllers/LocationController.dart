@@ -17,13 +17,14 @@ class LocationController with ChangeNotifier{
     _currentLocationYAxis = currentLocationYAxis;
     notifyListeners();
   }
-
-
+  //PartyLocation
   var _selectedPartyLocationXAxis;
   var _selectedPartyLocationYAxis;
   bool   _selectionBool = false;
 
   bool   get getSelectionBool => _selectionBool;
+  bool   get selectedPartyLocationXAxis => _selectedPartyLocationXAxis;
+  bool   get selectedPartyLocationYAxis => _selectedPartyLocationYAxis;
 
   set setSelectedPartyLocationXAxis(selectedPartyLocationXAxis){
     _selectedPartyLocationXAxis = selectedPartyLocationXAxis;
