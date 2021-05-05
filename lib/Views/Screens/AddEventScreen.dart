@@ -1,6 +1,6 @@
 import 'package:events_app/Controllers/AddEventController.dart';
 import 'package:events_app/Controllers/ImagePickerController.dart';
-import 'package:events_app/Controllers/MyLocationController.dart';
+import 'package:events_app/Controllers/LocationController.dart';
 import 'package:events_app/Controllers/UserCredentialController.dart';
 import 'package:events_app/Services/ImageStorage.dart';
 import 'package:events_app/Views/Component/MyTextField.dart';
@@ -185,7 +185,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           borderRadius: BorderRadius.circular(15)
                       ),
                       child: Center(
-                        child: Text(Provider.of<MyLocationController>(context).selectionState == true ? 'Place Picked' : 'Pick Place',
+                        child: Text(Provider.of<LocationController>(context).getSelectionBool == true ? 'Place Picked' : 'Pick Place',
                           style: TextStyle(color: Colors.blue),
                         ),
                       ),

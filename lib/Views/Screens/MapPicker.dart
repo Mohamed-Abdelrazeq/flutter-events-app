@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:events_app/Controllers/MyLocationController.dart';
+import 'package:events_app/Controllers/LocationController.dart';
 import 'package:flutter/material.dart';
 import 'package:map_pin_picker/map_pin_picker.dart';
 
@@ -17,7 +17,6 @@ class _MyMapPickerState extends State<MyMapPicker> {
   Completer<GoogleMapController> _controller = Completer();
   MapPickerController mapPickerController = MapPickerController();
 
-
   Address address;
 
   var textController = TextEditingController();
@@ -25,7 +24,7 @@ class _MyMapPickerState extends State<MyMapPicker> {
   @override
   Widget build(BuildContext context) {
     CameraPosition cameraPosition = CameraPosition(
-      target: LatLng(Provider.of<MyLocationController>(context).x,Provider.of<MyLocationController>(context).y),
+      target: LatLng(Provider.of<LocationController>(context).getCurrentLocationXAxis,Provider.of<LocationController>(context).getCurrentLocationYAxis),
       zoom: 1,
     );
     return Scaffold(
@@ -33,40 +32,29 @@ class _MyMapPickerState extends State<MyMapPicker> {
         children: [
           Expanded(
             child: MapPicker(
-              // pass icon widget
               iconWidget: Icon(
                 Icons.location_pin,
                 size: 50,
               ),
-              //add map picker controller
               mapPickerController: mapPickerController,
               child: GoogleMap(
                 zoomControlsEnabled: true,
-                // hide location button
                 myLocationButtonEnabled: true,
                 mapType: MapType.normal,
-                //  camera position
                 initialCameraPosition: cameraPosition,
                 onMapCreated: (GoogleMapController controller) {
                   _controller.complete(controller);
                 },
                 onCameraMoveStarted: () {
-                  // notify map is moving
+                  //Camera Started Moving
                   mapPickerController.mapMoving();
                 },
                 onCameraMove: (nCameraPosition) {
                   cameraPosition = nCameraPosition;
                 },
                 onCameraIdle: () async {
-                  // notify map stopped moving
+                  //Camera Stopped
                   mapPickerController.mapFinishedMoving();
-                  //get address name from camera position
-                  List<Address> addresses = await Geocoder.local
-                      .findAddressesFromCoordinates(Coordinates(
-                      cameraPosition.target.latitude,
-                      cameraPosition.target.longitude));
-                  // update the ui with the address
-                  textController.text = '${addresses.first?.addressLine ?? ''}';
                 },
               ),
             ),
@@ -75,13 +63,11 @@ class _MyMapPickerState extends State<MyMapPicker> {
       ),
       bottomNavigationBar: BottomAppBar(
         color: Colors.transparent,
-        elevation: 0,
         child: GestureDetector(
           onTap: (){
-            print(cameraPosition.target.latitude);
-            print(cameraPosition.target.longitude);
-            Provider.of<MyLocationController>(context,listen: false).selectionStateSetter(true);
-            Provider.of<MyLocationController>(context,listen: false).partyLocationSetter(cameraPosition.target.latitude, cameraPosition.target.longitude);
+            Provider.of<LocationController>(context,listen: false).setSelectionBool = true;
+            Provider.of<LocationController>(context,listen: false).setSelectedPartyLocationXAxis = cameraPosition.target.latitude;
+            Provider.of<LocationController>(context,listen: false).setSelectedPartyLocationYAxis = cameraPosition.target.longitude;
             Navigator.pop(context);
           },
           child: Container(

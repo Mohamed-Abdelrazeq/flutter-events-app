@@ -1,4 +1,4 @@
-import 'package:events_app/Controllers/MyLocationController.dart';
+import 'package:events_app/Controllers/LocationController.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -26,7 +26,7 @@ void main() {
         ChangeNotifierProvider<CurrentPageContoller>(create: (_) => CurrentPageContoller()),
         ChangeNotifierProvider<UserInfoController>(create: (_) => UserInfoController()),
         ChangeNotifierProvider<AddEventController>(create: (_) => AddEventController()),
-        ChangeNotifierProvider<MyLocationController>(create: (_) => MyLocationController()),
+        ChangeNotifierProvider<LocationController>(create: (_) => LocationController()),
         ChangeNotifierProvider<ImagePickerController>(create: (_) => ImagePickerController()),
       ],
       child: MyApp(),
