@@ -2,60 +2,18 @@ import 'package:events_app/Controllers/LocationController.dart';
 import 'package:events_app/Views/Component/EventCard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:geocoder/geocoder.dart';
-import 'package:geolocator/geolocator.dart';
-
 import 'package:provider/provider.dart';
-
 import 'Loading.dart';
 import 'SomethingIsWrong.dart';
 
 class HomePage extends StatelessWidget {
-  Future<String> _determinePosition(var context) async {
-    bool serviceEnabled;
-    LocationPermission permission;
-    //Get Permissions
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      return Future.error('Location services are disabled.');
-    }
-
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.deniedForever) {
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
-    }
-
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission != LocationPermission.whileInUse &&
-          permission != LocationPermission.always) {
-        return Future.error(
-            'Location permissions are denied (actual value: $permission).');
-      }
-    }
-    //Get Location
-    var currentCoordinates = await Geolocator.getCurrentPosition();
-    Provider.of<LocationController>(context,listen: false).setCurrentLocationXAxis = currentCoordinates.latitude.toDouble();
-    Provider.of<LocationController>(context,listen: false).setCurrentLocationYAxis = currentCoordinates.longitude.toDouble();
-    return await _getLocationName(Coordinates(
-        currentCoordinates.latitude.toDouble(),
-        currentCoordinates.longitude.toDouble()));
-  }
-  Future<String> _getLocationName(Coordinates coordinates) async {
-    var addresses =
-        await Geocoder.local.findAddressesFromCoordinates(coordinates);
-    var first = addresses.first.countryName;
-    return first;
-  }
-
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
     return FutureBuilder(
-      future: _determinePosition(context),
+      future: Provider.of<LocationController>(context,listen: false).getCurrentLocation(),
       builder: (context, snapshot) {
         // Check for errors
         if (snapshot.hasError) {
