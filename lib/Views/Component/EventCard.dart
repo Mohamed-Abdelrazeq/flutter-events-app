@@ -10,11 +10,15 @@ class EventCard extends StatelessWidget {
     @required this.name,
     @required this.imageUrl,
     @required this.organizer,
-    @required this.about
+    @required this.about,
+    @required this.latitude,
+    @required this.longitude,
   });
 
   final double width;
   final double height;
+  final double latitude;
+  final double longitude;
   final String date;
   final String place;
   final String name;
@@ -22,13 +26,14 @@ class EventCard extends StatelessWidget {
   final String about;
   final String organizer;
 
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => EventScreen(date: date, place: place, organizer: organizer, about: about, name: name, imageUrl: imageUrl)),
+          MaterialPageRoute(builder: (context) => EventScreen(date: date,longitude: longitude,latitude: latitude, place: place, organizer: organizer, about: about, name: name, imageUrl: imageUrl)),
         );
       },
       child: Container(

@@ -1,4 +1,5 @@
 import 'package:events_app/Views/Component/MyButton.dart';
+import 'package:events_app/Views/Screens/MapDirections.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +12,8 @@ class EventScreen extends StatelessWidget {
     @required this.about,
     @required this.name,
     @required this.imageUrl,
+    @required this.latitude,
+    @required this.longitude,
   });
 
   final String date;
@@ -19,6 +22,9 @@ class EventScreen extends StatelessWidget {
   final String about;
   final String name;
   final String imageUrl;
+  final double latitude;
+  final double longitude;
+
 
   @override
   Widget build(BuildContext context) {
@@ -223,7 +229,12 @@ class EventScreen extends StatelessWidget {
                       width: width*.4,
                       height: height,
                       myText: 'GO NOW!',
-                      myFunc: () {},
+                      myFunc: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => MapDirections(latitude: latitude, longitude: longitude)),
+                        );
+                      },
                       horizontalPadding: 0,
                       verticalPadding: height * .02,
                       myTextColor: Colors.white,

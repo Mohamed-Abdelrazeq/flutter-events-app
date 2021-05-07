@@ -12,6 +12,7 @@ import 'Views/Screens/EnterScreen.dart';
 import 'Views/Screens/HomePage.dart';
 import 'Views/Screens/Loading.dart';
 import 'Views/Screens/Login.dart';
+import 'Views/Screens/MapDirections.dart';
 import 'Views/Screens/MapPicker.dart';
 import 'Views/Screens/MyHomePage.dart';
 import 'Views/Screens/Register.dart';
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
         '/HomePage': (context) => HomePage(),
         '/AddEventScreen': (context) => AddEventScreen(),
         '/MyMapPicker': (context) => MyMapPicker(),
+        '/MapDirections': (context) => MapDirections(),
       },
       home: FutureBuilder(
         // Initialize FlutterFire:

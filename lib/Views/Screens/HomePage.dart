@@ -102,7 +102,11 @@ class HomePage extends StatelessWidget {
                             String about =  data['about'];
                             String name = data['name'];
                             String imageUrl = data['imageUrl'];
-                            return EventCard(width: width, height: height, date: date, place: location, name: name, imageUrl: imageUrl, organizer: organizer, about: about);
+                            double latitude  =  data['xAxis'];
+                            double longitude = data['yAxis'];
+                            print(latitude);
+                            print(longitude);
+                            return EventCard(width: width, height: height,latitude: latitude,longitude: longitude, date: date, place: location, name: name, imageUrl: imageUrl, organizer: organizer, about: about);
                           }).toList(),
                         );
                       },
