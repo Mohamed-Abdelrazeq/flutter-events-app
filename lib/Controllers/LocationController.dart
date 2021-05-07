@@ -40,7 +40,7 @@ class LocationController with ChangeNotifier{
     notifyListeners();
   }
   //Methods
-  Future<Coordinates> getCurrentLatitudeAndLongitude() async {
+  Future<Coordinates> _getCurrentLatitudeAndLongitude() async {
     bool serviceEnabled;
     LocationPermission permission;
     //Get Permissions
@@ -74,10 +74,18 @@ class LocationController with ChangeNotifier{
   }
   Future<String> getLocationName(Coordinates positionCoordinates) async {
     var addresses = await Geocoder.local.findAddressesFromCoordinates(positionCoordinates);
-    var first = addresses.first.countryName;
+    String first;
+    if(addresses.first.adminArea.split(' ')[addresses.first.adminArea.split(' ').length-1] == "Governorate"){
+      first = addresses.first.adminArea.substring(0,addresses.first.adminArea.length-12);
+    }else{
+      first = addresses.first.adminArea;
+    }
+    // first =  addresses.first.adminArea;
+    print(first);
+    print(addresses.first.adminArea);
     return first;
   }
   Future<String> getCurrentLocation() async {
-    return await getLocationName(await getCurrentLatitudeAndLongitude());
+    return await getLocationName(await _getCurrentLatitudeAndLongitude());
   }
 }
