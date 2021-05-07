@@ -24,49 +24,50 @@ class MapDirections extends StatefulWidget {
 }
 
 class _MapDirectionsState extends State<MapDirections> {
+  Set<Marker> markers = Set();
   Completer<GoogleMapController> _controller = Completer();
-  MapPickerController mapPickerController = MapPickerController();
-
-  Address address;
+  @override
+  void initState() {
+    markers.add(
+        Marker(
+          position: LatLng(widget.latitude,widget.longitude),
+          markerId: MarkerId('1') ,
+        )
+    );
+    super.initState();
+  }
 
   var textController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     CameraPosition cameraPosition = CameraPosition(
       target: LatLng(widget.latitude,widget.longitude),
-      zoom: 1,
+      zoom: 10,
     );
     return Scaffold(
       body: Column(
         children: [
           Expanded(
-            child: MapPicker(
-              iconWidget: Icon(
-                Icons.location_pin,
-                size: 50,
-              ),
-              mapPickerController: mapPickerController,
-              child: GoogleMap(
-                zoomControlsEnabled: true,
-                myLocationButtonEnabled: true,
-                mapType: MapType.normal,
-                initialCameraPosition: cameraPosition,
-                onMapCreated: (GoogleMapController controller) {
-                  _controller.complete(controller);
-                },
-                onCameraMoveStarted: () {
-                  //Camera Started Moving
-                  mapPickerController.mapMoving();
-                },
-                onCameraMove: (nCameraPosition) {
-                  cameraPosition = nCameraPosition;
-                },
-                onCameraIdle: () async {
-                  //Camera Stopped
-                  mapPickerController.mapFinishedMoving();
-                },
-              ),
+            child: GoogleMap(
+              zoomControlsEnabled: true,
+              myLocationButtonEnabled: true,
+              mapType: MapType.normal,
+              initialCameraPosition: cameraPosition,
+              markers: markers,
+              onMapCreated: (GoogleMapController controller) {
+                _controller.complete(controller);
+              },
+              onCameraMoveStarted: () {
+                //Camera Started Moving
+                // mapPickerController.mapMoving();
+              },
+              onCameraMove: (nCameraPosition) {
+                cameraPosition = nCameraPosition;
+              },
+              onCameraIdle: () async {
+                //Camera Stopped
+                // mapPickerController.mapFinishedMoving();
+              },
             ),
           ),
         ],

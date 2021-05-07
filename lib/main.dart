@@ -49,7 +49,6 @@ class MyApp extends StatelessWidget {
         '/HomePage': (context) => HomePage(),
         '/AddEventScreen': (context) => AddEventScreen(),
         '/MyMapPicker': (context) => MyMapPicker(),
-        '/MapDirections': (context) => MapDirections(),
       },
       home: FutureBuilder(
         // Initialize FlutterFire:
