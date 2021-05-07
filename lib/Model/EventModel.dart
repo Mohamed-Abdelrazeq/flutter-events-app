@@ -1,21 +1,25 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class EventModel {
   EventModel({
-    @required this.title,
-    @required this.about,
-    @required this.date,
-    @required this.xAxis,
-    @required this.yAxis,
-    @required this.posterUrl,
+    this.title,
+    this.about,
+    this.location,
+    this.organizer,
+    this.date,
+    this.xAxis,
+    this.yAxis,
+    this.posterUrl,
   });
 
   String title;
   String about;
-  DateTime date;
+  String location;
+  String organizer;
   double xAxis;
   double yAxis;
+  DateTime date;
   String posterUrl;
 
   CollectionReference _collectionReference =
@@ -25,14 +29,22 @@ class EventModel {
     return _collectionReference
         .doc(title)
         .set({
-          'name'    : this.title,
-          'about'   : this.about,
-          'date'    : this.date,
-          'xAxis'   : this.xAxis,
-          'yAxis'   : this.yAxis,
-          'imageUrl': this.posterUrl,
+          'name'     : this.title,
+          'about'    : this.about,
+          'date'     : this.date,
+          'xAxis'    : this.xAxis,
+          'yAxis'    : this.yAxis,
+          'imageUrl' : this.posterUrl,
+          'location' : this.location,
+          'organizer': this.organizer
         })
         .then((value) => print("Event Added"))
         .catchError((error) => print("Failed to add event: $error"));
+  }
+
+  String dateFormat(Timestamp stampTime){
+    var date = DateTime.fromMillisecondsSinceEpoch(stampTime.millisecondsSinceEpoch);
+    var formattedDate = DateFormat.yMMMd().format(date);
+    return formattedDate;
   }
 }

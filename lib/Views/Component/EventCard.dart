@@ -52,7 +52,8 @@ class EventCard extends StatelessWidget {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   image: DecorationImage(
-                      image: AssetImage(imageUrl))),
+                      image: NetworkImage(imageUrl),
+                  fit: BoxFit.cover)),
             ),
             SizedBox(
               width: 15,

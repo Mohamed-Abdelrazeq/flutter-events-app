@@ -1,6 +1,6 @@
 import 'package:events_app/Controllers/ImagePickerController.dart';
 import 'package:events_app/Controllers/LocationController.dart';
-import 'package:events_app/Controllers/UserCredentialController.dart';
+import 'package:events_app/Controllers/UserInfoController.dart';
 import 'package:events_app/Model/EventModel.dart';
 import 'package:events_app/Services/ImageStorage.dart';
 import 'package:events_app/Views/Component/MyFlushBar.dart';
@@ -243,6 +243,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
                       title: _titleController.text,
                       about: _summaryController.text,
                       date: _eventDate,
+                      organizer: Provider.of<UserInfoController>(context,listen: false).username,
+                      location: Provider.of<LocationController>(context,listen: false).getPartyLocationName,
                       xAxis: Provider.of<LocationController>(context,listen: false).getSelectedPartyLocationXAxis,
                       yAxis:  Provider.of<LocationController>(context,listen: false).getSelectedPartyLocationYAxis,
                       posterUrl: Provider.of<ImageStorage>(context,listen: false).getDownloadURL,

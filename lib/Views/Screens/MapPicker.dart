@@ -68,6 +68,7 @@ class _MyMapPickerState extends State<MyMapPicker> {
             Provider.of<LocationController>(context,listen: false).setSelectionBool = true;
             Provider.of<LocationController>(context,listen: false).setSelectedPartyLocationXAxis = cameraPosition.target.latitude;
             Provider.of<LocationController>(context,listen: false).setSelectedPartyLocationYAxis = cameraPosition.target.longitude;
+            Provider.of<LocationController>(context,listen: false).setPartyLocationName = 'Alexandria';
             Navigator.pop(context);
           },
           child: Container(

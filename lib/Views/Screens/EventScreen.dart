@@ -41,7 +41,7 @@ class EventScreen extends StatelessWidget {
                       ),
                     ],
                     image: DecorationImage(
-                        image: AssetImage(imageUrl),
+                        image: NetworkImage(imageUrl),
                         fit: BoxFit.cover),
                     borderRadius: BorderRadius.only(
                         bottomRight: Radius.circular(30),

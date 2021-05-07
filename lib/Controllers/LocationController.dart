@@ -13,13 +13,15 @@ class LocationController with ChangeNotifier{
   double get getCurrentLocationYAxis => _currentLocationYAxis;
   ////PartyLocation////
   //Vars
-  var _selectedPartyLocationXAxis;
-  var _selectedPartyLocationYAxis;
+  double _selectedPartyLocationXAxis;
+  double _selectedPartyLocationYAxis;
+  String _partyLocationName;
   bool   _selectionBool = false;
   //Getters
   bool   get getSelectionBool => _selectionBool;
   double get getSelectedPartyLocationXAxis => _selectedPartyLocationXAxis;
   double get getSelectedPartyLocationYAxis => _selectedPartyLocationYAxis;
+  String get getPartyLocationName => _partyLocationName;
   //Setters
   set setSelectedPartyLocationXAxis(selectedPartyLocationXAxis){
     _selectedPartyLocationXAxis = selectedPartyLocationXAxis;
@@ -27,6 +29,10 @@ class LocationController with ChangeNotifier{
   }
   set setSelectedPartyLocationYAxis(selectedPartyLocationYAxis){
     _selectedPartyLocationYAxis = selectedPartyLocationYAxis;
+    notifyListeners();
+  }
+  set setPartyLocationName(name){
+    _partyLocationName = name;
     notifyListeners();
   }
   set setSelectionBool (bool state) {

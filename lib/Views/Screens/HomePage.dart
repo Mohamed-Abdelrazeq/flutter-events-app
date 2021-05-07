@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:events_app/Controllers/LocationController.dart';
+import 'package:events_app/Model/EventModel.dart';
 import 'package:events_app/Views/Component/EventCard.dart';
+import 'package:events_app/Views/Component/Spanner.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -7,13 +10,16 @@ import 'Loading.dart';
 import 'SomethingIsWrong.dart';
 
 class HomePage extends StatelessWidget {
+  final CollectionReference _eventsCollectionReference =
+      FirebaseFirestore.instance.collection('events');
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
     return FutureBuilder(
-      future: Provider.of<LocationController>(context,listen: false).getCurrentLocation(),
+      future: Provider.of<LocationController>(context, listen: false)
+          .getCurrentLocation(),
       builder: (context, snapshot) {
         // Check for errors
         if (snapshot.hasError) {
@@ -76,56 +82,34 @@ class HomePage extends StatelessWidget {
                   width: width,
                   height: height * .58,
                   child: Padding(
-                    padding: EdgeInsets.only(right: width * .05,left: width * .05),
-                    child: ListView(
-                      physics: BouncingScrollPhysics(),
-                      children: [
-                        EventCard(
-                          width: width,
-                          height: height,
-                          name: 'Rock Party',
-                          date: '1 Feb,2021',
-                          place: 'Alexandria Great hall',
-                          imageUrl: 'images/partyposter.jpg',
-                          organizer: 'John Smith',
-                          about:'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec,',
-                        ),
-                        EventCard(
-                          width: width,
-                          height: height,
-                          name: 'Metal Party',
-                          date: '1 Feb,2021',
-                          place: 'Alexandria Great hall',
-                          imageUrl: 'images/partyposter2.jpg',
-                          organizer: 'John Smith',
-                          about:'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec,',
-
-                        ),
-                        EventCard(
-                          width: width,
-                          height: height,
-                          name: 'Pop Party',
-                          date: '1 Feb,2021',
-                          place: 'Alexandria Great hall',
-                          imageUrl: 'images/partposter3.jpg',
-                          organizer: 'John Smith',
-                          about:'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec,',
-
-                        ),
-                        EventCard(
-                          width: width,
-                          height: height,
-                          name: 'Rock Party',
-                          date: '1 Feb,2021',
-                          place: 'Alexandria Great hall',
-                          imageUrl: 'images/partposter4.jpg',
-                            organizer: 'John Smith',
-                            about:'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec,',
-
-                        ),
-                        SizedBox(height: 20,),
-                      ],
+                    padding: EdgeInsets.only(right: width * .05, left: width * .05),
+                    child: StreamBuilder<QuerySnapshot>(
+                      stream: _eventsCollectionReference.snapshots(),
+                      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (snapshot.hasError) {
+                          return Text('Something went wrong');
+                        }
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return spanner;
+                        }
+                        return ListView(
+                          physics: BouncingScrollPhysics(),
+                          children: snapshot.data.docs.map((DocumentSnapshot document){
+                            Map<String, dynamic> data = document.data();
+                            String date = EventModel().dateFormat(document.data()['date']);
+                            String location = data['location'];
+                            String organizer =  data['organizer'];
+                            String about =  data['about'];
+                            String name = data['name'];
+                            String imageUrl = data['imageUrl'];
+                            return EventCard(width: width, height: height, date: date, place: location, name: name, imageUrl: imageUrl, organizer: organizer, about: about);
+                          }).toList(),
+                        );
+                      },
                     ),
+
+
+
                   ),
                 )
               ],
@@ -137,4 +121,3 @@ class HomePage extends StatelessWidget {
     );
   }
 }
-

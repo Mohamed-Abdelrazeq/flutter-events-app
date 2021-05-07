@@ -1,4 +1,4 @@
-import 'package:events_app/Controllers/UserCredentialController.dart';
+import 'package:events_app/Controllers/UserInfoController.dart';
 import 'package:events_app/Views/Component/UserDataCard.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

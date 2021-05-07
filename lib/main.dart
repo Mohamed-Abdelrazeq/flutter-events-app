@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'Controllers/ImagePickerController.dart';
-import 'Controllers/UserCredentialController.dart';
+import 'Controllers/UserInfoController.dart';
 import 'Controllers/CurrentPageController.dart';
 import 'Views/Screens/AccountPage.dart';
 import 'Views/Screens/AddEventScreen.dart';
