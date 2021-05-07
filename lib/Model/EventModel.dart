@@ -47,4 +47,5 @@ class EventModel {
     var formattedDate = DateFormat.yMMMd().format(date);
     return formattedDate;
   }
+
 }

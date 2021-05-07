@@ -3,12 +3,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Authentication {
 
-  FirebaseAuth auth = FirebaseAuth.instance;
-  CollectionReference users = FirebaseFirestore.instance.collection('users');
+  FirebaseAuth _auth = FirebaseAuth.instance;
+  CollectionReference _users = FirebaseFirestore.instance.collection('users');
 
   Future<UserCredential> registration(String email, String password)async{
     try {
-      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
           email: email,
           password: password,
       );
@@ -27,7 +27,7 @@ class Authentication {
 
   Future<UserCredential> login(String email, String password)async{
     try {
-      UserCredential userCredential = await auth.signInWithEmailAndPassword(
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
           email: email,
           password: password,
       );
@@ -43,7 +43,7 @@ class Authentication {
   }
 
   Future<void> addUser(String username,String email,String phone) async {
-    return users
+    return _users
         .doc(email)
         .set({
       'username': username,
@@ -55,7 +55,7 @@ class Authentication {
   }
 
   Future getUser(String email)async{
-    var userCredentials = await users.doc(email).get();
+    var userCredentials = await _users.doc(email).get();
     return userCredentials.data();
   }
 
